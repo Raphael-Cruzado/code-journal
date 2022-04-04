@@ -1,3 +1,19 @@
 * {
   font-family: serif;
 }
+
+header:first-child {
+  background-color: rgb(71, 41, 119);
+  color: white;
+}
+
+input,
+textarea {
+  border-radius: 4px;
+}
+
+button {
+  background-color: rgb(71, 41, 119);
+  color: white;
+  font-size: larger;
+}
