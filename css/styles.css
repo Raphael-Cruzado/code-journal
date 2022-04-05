@@ -1,5 +1,5 @@
 * {
-  font-family: serif;
+  font-family: sans-serif;
 }
 
 header:first-child {
@@ -12,8 +12,19 @@ textarea {
   border-radius: 4px;
 }
 
+input {
+  height: 2rem;
+  margin-bottom: 1rem;
+  width: 22rem;
+}
+
+textarea {
+  margin-bottom: 1rem;
+}
+
 button {
   background-color: rgb(71, 41, 119);
+  border-radius: 4px;
   color: white;
   font-size: larger;
 }
