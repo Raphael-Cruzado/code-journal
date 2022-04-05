@@ -24,8 +24,6 @@ $saveButton.addEventListener('click', function (e) {
   newObj.image = $imageDisplay.src;
   newObj.title = $titleBox.value;
   newObj.notes = $notesBox.value;
-  console.log(newObj);
   data.entries.push(newObj);
-  console.log(data.entries);
   $form.reset();
 });
