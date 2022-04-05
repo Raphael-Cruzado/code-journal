@@ -14,10 +14,9 @@ $photoURL.addEventListener('input', function (e) {
 
 var $titleBox = document.querySelector('#input-box');
 var $notesBox = document.querySelector('textarea');
-var $saveButton = document.querySelector('button');
 var $form = document.querySelector('form');
 
-$saveButton.addEventListener('click', function (e) {
+$form.addEventListener('submit', function (e) {
   e.preventDefault();
   var newObj = {};
   newObj.entryId = data.nextEntryId++;
