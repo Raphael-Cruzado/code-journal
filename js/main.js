@@ -25,3 +25,62 @@ $form.addEventListener('submit', function (e) {
     $imageDisplay.src = 'images/placeholder-image-square.jpg';
   }
 });
+
+// <ul>
+//   <li class="column-full">
+//     <div class="column-half" style="float: left">
+//       <img class="column-full" id="entry-image" src="images/placeholder-image-square.jpg" alt="user-image">
+//     </div>
+//     <div class="column-half" id="entry-content" style="float: right">
+//       <h4><label for="user-text"></label></h4>
+//       <p></p>
+//   </li>
+// </ul>
+
+function addEntry(entry) {
+  var listItem = document.createElement('li');
+  var itemCard1 = document.createElement('div');
+  var userImage = document.createElement('img');
+  var itemCard2 = document.createElement('div');
+  var headingTitle = document.createElement('h4');
+  var headingLabel = document.createElement('label');
+  var userText = document.createElement('p');
+
+  listItem.setAttribute('class', 'column-full');
+
+  itemCard1.setAttribute('class', 'column-half');
+  itemCard1.style.float = 'left';
+  listItem.appendChild(itemCard1);
+
+  userImage.setAttribute('class', 'column-half');
+  userImage.setAttribute('id', 'entry-image');
+  userImage.setAttribute('src', entry.image);
+  itemCard1.appendChild(userImage);
+
+  itemCard2.setAttribute('class', 'column-half');
+  itemCard2.style.float = 'right';
+  listItem.appendChild(itemCard2);
+
+  itemCard2.appendChild(headingTitle);
+
+  headingLabel.setAttribute('for', 'user-text');
+  headingLabel.textContent = entry.title;
+  headingTitle.appendChild(headingLabel);
+
+  itemCard2.appendChild(userText);
+  userText.textContent = entry.notes;
+
+  $ulItem.appendChild(listItem);
+
+  return listItem;
+}
+
+var $ulItem = document.querySelector('ul');
+
+var testEntry = {
+  image: 'https://images.pexels.com/photos/47547/squirrel-animal-cute-rodents-47547.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
+  notes: 'what is even happening',
+  title: 'Lance'
+};
+
+console.log(addEntry(testEntry));
