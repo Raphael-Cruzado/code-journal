@@ -34,3 +34,22 @@ button {
   color: white;
   font-size: larger;
 }
+
+.no-wrap {
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.push-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+#entry-image {
+  width: 25rem;
+}
+
+ul {
+  list-style: none;
+  padding-left: 0;
+}
