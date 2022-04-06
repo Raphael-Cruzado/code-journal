@@ -6,9 +6,6 @@ var $photoURL = document.querySelector('#image-input');
 
 $photoURL.addEventListener('input', function (e) {
   $imageDisplay.src = $photoURL.value;
-  if ($photoURL.value === '') {
-    $imageDisplay.src = 'images/placeholder-image-square.jpg';
-  }
 });
 
 var $titleBox = document.querySelector('#input-box');
@@ -24,4 +21,7 @@ $form.addEventListener('submit', function (e) {
   newObj.notes = $notesBox.value;
   data.entries.push(newObj);
   $form.reset();
+  if ($photoURL.value === '') {
+    $imageDisplay.src = 'images/placeholder-image-square.jpg';
+  }
 });

@@ -19,11 +19,13 @@ img {
 input {
   height: 2rem;
   margin-bottom: 1rem;
-  width: 22rem;
+  width: 100%;
+  border-style: solid;
 }
 
 textarea {
   margin-bottom: 1rem;
+  border-style: solid;
 }
 
 button {
