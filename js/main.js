@@ -77,10 +77,7 @@ function addEntry(entry) {
 
 var $ulItem = document.querySelector('ul');
 
-var testEntry = {
-  image: 'https://images.pexels.com/photos/47547/squirrel-animal-cute-rodents-47547.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-  notes: 'what is even happening',
-  title: 'Lance'
-};
+var dataEntries = data.entries;
+addEntry(dataEntries[1]);
 
-console.log(addEntry(testEntry));
+// for (let i = 0; i < data.entries.length; i++)
