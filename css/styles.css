@@ -1,0 +1,36 @@
+* {
+  font-family: sans-serif;
+}
+
+header:first-child {
+  background-color: rgb(71, 41, 119);
+  color: white;
+}
+
+input,
+textarea {
+  border-radius: 4px;
+}
+
+img {
+  border-radius: 5px;
+}
+
+input {
+  height: 2rem;
+  margin-bottom: 1rem;
+  width: 100%;
+  border-style: solid;
+}
+
+textarea {
+  margin-bottom: 1rem;
+  border-style: solid;
+}
+
+button {
+  background-color: rgb(71, 41, 119);
+  border-radius: 4px;
+  color: white;
+  font-size: larger;
+}
