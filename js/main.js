@@ -20,10 +20,21 @@ $form.addEventListener('submit', function (e) {
   newObj.title = $titleBox.value;
   newObj.notes = $notesBox.value;
   data.entries.push(newObj);
-  $ulItem.appendChild(addEntry(newObj));
+  $ulItem.prepend(addEntry(newObj));
   $form.reset();
   if ($photoURL.value === '') {
     $imageDisplay.src = 'images/placeholder-image-square.jpg';
+  }
+});
+
+var $submitBtn = document.querySelector('#submit-btn');
+
+$submitBtn.addEventListener('click', function (e) {
+  if ($photoURL.value === '') {
+    $imageDisplay.src = 'images/placeholder-image-square.jpg';
+  } else {
+    viewForm.className = 'hidden';
+    viewEntries.className = '';
   }
 });
 
@@ -72,12 +83,44 @@ function addEntry(entry) {
   userText.textContent = entry.notes;
 
   return listItem;
+
 }
+
+var $navBar = document.querySelector('.nav-bar');
+var viewForm = document.querySelector("[data-view='entry-form']");
+var viewEntries = document.querySelector("[data-view='entries']");
+
+$navBar.addEventListener('click', function (e) {
+  if (viewEntries.className === 'hidden') {
+    viewForm.className = 'hidden';
+    viewEntries.className = '';
+  }
+});
+
+var $titleHeading = document.querySelector('h3');
+
+$titleHeading.addEventListener('click', function (e) {
+  if (viewForm.className === 'hidden') {
+    viewEntries.className = 'hidden';
+    viewForm.className = '';
+  }
+});
+
+var $newEntry = document.querySelector('#new-btn');
+
+$newEntry.addEventListener('click', function (e) {
+  if (viewForm.className === 'hidden') {
+    viewEntries.className = 'hidden';
+    viewForm.className = '';
+  }
+});
 
 var $ulItem = document.querySelector('ul');
-
 var dataEntries = data.entries;
 
-for (let i = 0; i < dataEntries.length; i++) {
-  $ulItem.appendChild(addEntry(dataEntries[i]));
-}
+window.addEventListener('DOMContentLoaded', function (e) {
+  for (let i = 0; i < dataEntries.length; i++) {
+    var newEntry = addEntry(dataEntries[i]);
+    $ulItem.prepend(newEntry);
+  }
+});

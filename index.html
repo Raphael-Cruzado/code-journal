@@ -28,7 +28,7 @@
   </header>
   <main>
     <div class="container">
-      <div data-view="entry-form">
+      <div data-view="entry-form" class="">
         <form action="" method="get">
           <h1>New Entry</h1>
           <div class="row">
@@ -48,21 +48,20 @@
               <textarea required class="column-full" name="message" cols="30" rows="10"></textarea>
             </div>
             <div class="column-full push-right">
-              <button type="submit">Save</button>
+              <button type="submit" id="submit-btn">Save</button>
             </div>
           </div>
         </form>
       </div>
 
-      <a id="entries"></a>
-      <div data-view="entries">
+      <div data-view="entries" class="hidden">
 
         <div class="row no-wrap">
           <div class="column-half">
             <h1>Entries</h1>
           </div>
           <div class="column-half push-right">
-            <button>NEW</button>
+            <button id="new-btn">NEW</button>
           </div>
         </div>
 
