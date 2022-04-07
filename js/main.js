@@ -20,6 +20,7 @@ $form.addEventListener('submit', function (e) {
   newObj.title = $titleBox.value;
   newObj.notes = $notesBox.value;
   data.entries.push(newObj);
+  $ulItem.appendChild(addEntry(newObj));
   $form.reset();
   if ($photoURL.value === '') {
     $imageDisplay.src = 'images/placeholder-image-square.jpg';

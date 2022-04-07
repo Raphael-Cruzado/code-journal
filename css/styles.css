@@ -59,3 +59,12 @@ ul {
 li {
   margin-bottom: 2rem;
 }
+
+.nav-bar {
+  margin-left: 1rem;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
