@@ -15,3 +15,6 @@ if (currentDataJSON !== null) {
 window.addEventListener('beforeunload', function (e) {
   this.localStorage.setItem('data-entries-storage', JSON.stringify(data));
 });
+
+window.addEventListener('DOMContentLoaded', function () {
+});

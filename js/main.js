@@ -70,14 +70,13 @@ function addEntry(entry) {
   itemCard2.appendChild(userText);
   userText.textContent = entry.notes;
 
-  $ulItem.appendChild(listItem);
-
   return listItem;
 }
 
 var $ulItem = document.querySelector('ul');
 
 var dataEntries = data.entries;
-addEntry(dataEntries[1]);
 
-// for (let i = 0; i < data.entries.length; i++)
+for (let i = 0; i < dataEntries.length; i++) {
+  $ulItem.appendChild(addEntry(dataEntries[i]));
+}
