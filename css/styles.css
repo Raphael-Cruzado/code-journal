@@ -34,3 +34,37 @@ button {
   color: white;
   font-size: larger;
 }
+
+.no-wrap {
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.push-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+#entry-image {
+  width: 100%;
+}
+
+ul {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding-left: 0;
+}
+
+li {
+  margin-bottom: 2rem;
+}
+
+.nav-bar {
+  margin-left: 1rem;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}

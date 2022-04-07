@@ -20,8 +20,107 @@ $form.addEventListener('submit', function (e) {
   newObj.title = $titleBox.value;
   newObj.notes = $notesBox.value;
   data.entries.push(newObj);
+  $ulItem.prepend(addEntry(newObj));
   $form.reset();
   if ($photoURL.value === '') {
     $imageDisplay.src = 'images/placeholder-image-square.jpg';
+  }
+});
+
+var $submitBtn = document.querySelector('#submit-btn');
+
+$submitBtn.addEventListener('click', function (e) {
+  if ($photoURL.value === '') {
+    $imageDisplay.src = 'images/placeholder-image-square.jpg';
+  } else {
+    viewForm.className = 'hidden';
+    viewEntries.className = '';
+  }
+});
+
+// <ul>
+//   <li class="column-full">
+//     <div class="column-half" style="float: left">
+//       <img class="column-full" id="entry-image" src="images/placeholder-image-square.jpg" alt="user-image">
+//     </div>
+//     <div class="column-half" id="entry-content" style="float: right">
+//       <h4><label for="user-text"></label></h4>
+//       <p></p>
+//   </li>
+// </ul>
+
+function addEntry(entry) {
+  var listItem = document.createElement('li');
+  var itemCard1 = document.createElement('div');
+  var userImage = document.createElement('img');
+  var itemCard2 = document.createElement('div');
+  var headingTitle = document.createElement('h4');
+  var headingLabel = document.createElement('label');
+  var userText = document.createElement('p');
+
+  listItem.setAttribute('class', 'column-full');
+
+  itemCard1.setAttribute('class', 'column-half');
+  itemCard1.style.float = 'left';
+  listItem.appendChild(itemCard1);
+
+  userImage.setAttribute('class', 'column-half');
+  userImage.setAttribute('id', 'entry-image');
+  userImage.setAttribute('src', entry.image);
+  itemCard1.appendChild(userImage);
+
+  itemCard2.setAttribute('class', 'column-half');
+  itemCard2.style.float = 'right';
+  listItem.appendChild(itemCard2);
+
+  itemCard2.appendChild(headingTitle);
+
+  headingLabel.setAttribute('for', 'user-text');
+  headingLabel.textContent = entry.title;
+  headingTitle.appendChild(headingLabel);
+
+  itemCard2.appendChild(userText);
+  userText.textContent = entry.notes;
+
+  return listItem;
+
+}
+
+var $navBar = document.querySelector('.nav-bar');
+var viewForm = document.querySelector("[data-view='entry-form']");
+var viewEntries = document.querySelector("[data-view='entries']");
+
+$navBar.addEventListener('click', function (e) {
+  if (viewEntries.className === 'hidden') {
+    viewForm.className = 'hidden';
+    viewEntries.className = '';
+  }
+});
+
+var $titleHeading = document.querySelector('h3');
+
+$titleHeading.addEventListener('click', function (e) {
+  if (viewForm.className === 'hidden') {
+    viewEntries.className = 'hidden';
+    viewForm.className = '';
+  }
+});
+
+var $newEntry = document.querySelector('#new-btn');
+
+$newEntry.addEventListener('click', function (e) {
+  if (viewForm.className === 'hidden') {
+    viewEntries.className = 'hidden';
+    viewForm.className = '';
+  }
+});
+
+var $ulItem = document.querySelector('ul');
+var dataEntries = data.entries;
+
+window.addEventListener('DOMContentLoaded', function (e) {
+  for (let i = 0; i < dataEntries.length; i++) {
+    var newEntry = addEntry(dataEntries[i]);
+    $ulItem.prepend(newEntry);
   }
 });

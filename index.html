@@ -18,37 +18,59 @@
   <header>
     <div class="container">
       <div class="row">
-        <div class="column-full"></div>
         <h3>Code Journal</h3>
+        <div class="nav-bar">
+          <h4><a href="#entries">Entries</a></h4>
+        </div>
       </div>
     </div>
 
   </header>
   <main>
-    <div class="container" data-view="entry-form">
-      <form action="" method="get">
-        <h1>New Entry</h1>
-        <div class="row">
-          <div class="column-half">
-            <img class="column-full" id="display-image" src="images/placeholder-image-square.jpg" alt="user-image">
+    <div class="container">
+      <div data-view="entry-form" class="">
+        <form action="" method="get">
+          <h1>New Entry</h1>
+          <div class="row">
+            <div class="column-half">
+              <img class="column-full" id="display-image" src="images/placeholder-image-square.jpg" alt="user-image">
+            </div>
+            <div class="column-half">
+              <h4><label for="title-input">Title</label></h4>
+              <input required type="text" id="input-box">
+              <h4><label for="image-input">Photo URL</label></h4>
+              <input required type="url" id="image-input">
+            </div>
           </div>
+          <div class="row">
+            <div class="column-full">
+              <h4><label for="user-text">Notes</label></h4>
+              <textarea required class="column-full" name="message" cols="30" rows="10"></textarea>
+            </div>
+            <div class="column-full push-right">
+              <button type="submit" id="submit-btn">Save</button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div data-view="entries" class="hidden">
+
+        <div class="row no-wrap">
           <div class="column-half">
-            <h4><label for="title-input">Title</label></h4>
-            <input required type="text" id="input-box">
-            <h4><label for="image-input">Photo URL</label></h4>
-            <input required type="url" id="image-input">
+            <h1>Entries</h1>
+          </div>
+          <div class="column-half push-right">
+            <button id="new-btn">NEW</button>
           </div>
         </div>
+
         <div class="row">
-          <div class="column-full">
-            <h4><label for="user-text">Notes</label></h4>
-            <textarea required class="column-full" name="message" cols="30" rows="10"></textarea>
-          </div>
-          <div class="column-full">
-            <button type="submit">Save</button>
-          </div>
+          <ul>
+          </ul>
         </div>
-      </form>
+      </div>
+    </div>
   </main>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>
