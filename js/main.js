@@ -24,6 +24,8 @@ $form.addEventListener('submit', function (e) {
   $form.reset();
   if ($photoURL.value === '') {
     $imageDisplay.src = 'images/placeholder-image-square.jpg';
+  } else {
+    $imageDisplay.src = $photoURL.value;
   }
 });
 
@@ -44,7 +46,10 @@ $submitBtn.addEventListener('click', function (e) {
 //       <img class="column-full" id="entry-image" src="images/placeholder-image-square.jpg" alt="user-image">
 //     </div>
 //     <div class="column-half" id="entry-content" style="float: right">
-//       <h4><label for="user-text"></label></h4>
+//       <div class="title-column">
+//          <h4><label for="user-text">Title</label></h4>
+//           <i class="fas fa-pen"></i>
+//        </div >
 //       <p></p>
 //   </li>
 // </ul>
@@ -54,7 +59,9 @@ function addEntry(entry) {
   var itemCard1 = document.createElement('div');
   var userImage = document.createElement('img');
   var itemCard2 = document.createElement('div');
+  var titleCol = document.createElement('div');
   var headingTitle = document.createElement('h4');
+  var icon = document.createElement('i');
   var headingLabel = document.createElement('label');
   var userText = document.createElement('p');
 
@@ -73,11 +80,18 @@ function addEntry(entry) {
   itemCard2.style.float = 'right';
   listItem.appendChild(itemCard2);
 
-  itemCard2.appendChild(headingTitle);
-
   headingLabel.setAttribute('for', 'user-text');
   headingLabel.textContent = entry.title;
   headingTitle.appendChild(headingLabel);
+
+  titleCol.setAttribute('class', 'title-column');
+  itemCard2.appendChild(titleCol);
+
+  titleCol.appendChild(headingTitle);
+
+  icon.setAttribute('class', 'fas fa-pen');
+  icon.setAttribute('data-entry-id', entry.entryId);
+  titleCol.appendChild(icon);
 
   itemCard2.appendChild(userText);
   userText.textContent = entry.notes;
@@ -122,5 +136,17 @@ window.addEventListener('DOMContentLoaded', function (e) {
   for (let i = 0; i < dataEntries.length; i++) {
     var newEntry = addEntry(dataEntries[i]);
     $ulItem.prepend(newEntry);
+  }
+});
+
+$ulItem.addEventListener('click', function (e) {
+
+  if (e.target.className === 'fas fa-pen') {
+    viewEntries.className = 'hidden';
+    viewForm.className = '';
+    $photoURL.value = e.path[3].firstChild.firstChild.src;
+    $imageDisplay.src = $photoURL.value;
+    $titleBox.value = e.path[3].children[1].firstChild.firstChild.innerText;
+    $notesBox.value = e.path[3].children[1].lastChild.innerText;
   }
 });
