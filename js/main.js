@@ -13,6 +13,10 @@ var $notesBox = document.querySelector('textarea');
 var $form = document.querySelector('form');
 
 $form.addEventListener('submit', function (e) {
+  console.log(e);
+  console.log(e.target);
+  console.log(data.entries[i].entryId);
+
   e.preventDefault();
   var newObj = {};
   newObj.entryId = data.nextEntryId++;
@@ -22,6 +26,7 @@ $form.addEventListener('submit', function (e) {
   data.entries.push(newObj);
   $ulItem.prepend(addEntry(newObj));
   $form.reset();
+
   if ($photoURL.value === '') {
     $imageDisplay.src = 'images/placeholder-image-square.jpg';
   } else {
@@ -140,6 +145,10 @@ window.addEventListener('DOMContentLoaded', function (e) {
 });
 
 $ulItem.addEventListener('click', function (e) {
+  console.log(e);
+  console.log(e.target.getAttribute('data-entry-id'));
+  console.log(data.entries[28].entryId);
+  console.log(e.target.dataset.entryId);
 
   if (e.target.className === 'fas fa-pen') {
     viewEntries.className = 'hidden';
@@ -148,5 +157,13 @@ $ulItem.addEventListener('click', function (e) {
     $imageDisplay.src = $photoURL.value;
     $titleBox.value = e.path[3].children[1].firstChild.firstChild.innerText;
     $notesBox.value = e.path[3].children[1].lastChild.innerText;
+  }
+
+  for (let i = 0; i < data.entries.length; i++) {
+    var dataEntryId = e.target.getAttribute('data-entry-id');
+    var targetEntryId = e.target.dataset.entryId;
+    if (targetEntryId === dataEntryId) {
+      console.log(dataEntryId);
+    }
   }
 });
