@@ -144,7 +144,7 @@ window.addEventListener('DOMContentLoaded', function (e) {
   }
 });
 
-$ulItem.addEventListener('click', function (e) {
+$ulItem.addEventListener('click', function getDataEntryId(e) {
   console.log(e);
   console.log(e.target.getAttribute('data-entry-id'));
   console.log(data.entries[28].entryId);
@@ -160,10 +160,12 @@ $ulItem.addEventListener('click', function (e) {
   }
 
   for (let i = 0; i < data.entries.length; i++) {
-    var dataEntryId = e.target.getAttribute('data-entry-id');
     var targetEntryId = e.target.dataset.entryId;
+    var dataEntryId = e.target.getAttribute('data-entry-id');
     if (targetEntryId === dataEntryId) {
+      dataEntryId = parseInt(dataEntryId);
       console.log(dataEntryId);
     }
   }
+  return dataEntryId;
 });
