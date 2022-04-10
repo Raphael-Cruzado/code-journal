@@ -15,7 +15,6 @@ var $form = document.querySelector('form');
 $form.addEventListener('submit', function (e) {
   console.log(e);
   console.log(e.target);
-  console.log(data.entries[i].entryId);
 
   e.preventDefault();
   var newObj = {};
@@ -26,6 +25,8 @@ $form.addEventListener('submit', function (e) {
   data.entries.push(newObj);
   $ulItem.prepend(addEntry(newObj));
   $form.reset();
+
+  // data.splice(//function that returns the array position, 1, newObj);
 
   if ($photoURL.value === '') {
     $imageDisplay.src = 'images/placeholder-image-square.jpg';
@@ -144,28 +145,46 @@ window.addEventListener('DOMContentLoaded', function (e) {
   }
 });
 
-$ulItem.addEventListener('click', function getDataEntryId(e) {
-  console.log(e);
-  console.log(e.target.getAttribute('data-entry-id'));
-  console.log(data.entries[28].entryId);
-  console.log(e.target.dataset.entryId);
+$ulItem.addEventListener('click', function setDataEditing(e) {
+  // console.log(data.indexOf(e.target));
 
   if (e.target.className === 'fas fa-pen') {
     viewEntries.className = 'hidden';
     viewForm.className = '';
+    data.editing = e.target.dataset.entryId;
     $photoURL.value = e.path[3].firstChild.firstChild.src;
     $imageDisplay.src = $photoURL.value;
     $titleBox.value = e.path[3].children[1].firstChild.firstChild.innerText;
     $notesBox.value = e.path[3].children[1].lastChild.innerText;
   }
 
+  var targetEntryId = e.target.dataset.entryId;
+  var dataEntryId = e.target.getAttribute('data-entry-id');
+
   for (let i = 0; i < data.entries.length; i++) {
-    var targetEntryId = e.target.dataset.entryId;
-    var dataEntryId = e.target.getAttribute('data-entry-id');
     if (targetEntryId === dataEntryId) {
-      dataEntryId = parseInt(dataEntryId);
-      console.log(dataEntryId);
+      data.editing = parseInt(targetEntryId);
+      break;
     }
   }
-  return dataEntryId;
+
+  // continue here
+
+  for (let i = 0; i < data.entries.length; i++) {
+    if (data.editing === e.view.dataEntries[i].entryId) {
+      console.log('it works');
+      break;
+    }
+  }
+  console.log(data);
+  console.log(data.editing);
+  console.log(e.view.dataEntries[40].entryId);
+  // use findindex() to return the associated array position of data.editing as a test
+
+  // function findEditNum(entryId) {
+  //   console.log(data.editing);
+  // }
+
+  // console.log(findIndex(findEditNum));
+  return data.editing;
 });
