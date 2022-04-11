@@ -160,7 +160,6 @@ $ulItem.addEventListener('click', function setDataEditing(e) {
 
   var targetEntryId = e.target.dataset.entryId;
   var dataEntryId = e.target.getAttribute('data-entry-id');
-
   for (let i = 0; i < data.entries.length; i++) {
     if (targetEntryId === dataEntryId) {
       data.editing = parseInt(targetEntryId);
@@ -172,19 +171,19 @@ $ulItem.addEventListener('click', function setDataEditing(e) {
 
   for (let i = 0; i < data.entries.length; i++) {
     if (data.editing === e.view.dataEntries[i].entryId) {
-      console.log('it works');
+      console.log(data);
+      console.log('data.editing: ', data.editing);
+      console.log('event.entryId: ', e.view.dataEntries[i].entryId);
+
+      var indexPos = data.entries.findIndex((element, index) => {
+        if (element.entryId === data.editing) {
+          return true;
+        }
+      });
+      console.log(indexPos);
       break;
     }
   }
-  console.log(data);
-  console.log(data.editing);
-  console.log(e.view.dataEntries[40].entryId);
-  // use findindex() to return the associated array position of data.editing as a test
 
-  // function findEditNum(entryId) {
-  //   console.log(data.editing);
-  // }
-
-  // console.log(findIndex(findEditNum));
   return data.editing;
 });
