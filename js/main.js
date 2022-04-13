@@ -13,18 +13,34 @@ var $notesBox = document.querySelector('textarea');
 var $form = document.querySelector('form');
 
 $form.addEventListener('submit', function submitEntry(e) {
+  e.preventDefault();
   console.log(e);
   console.log(e.target);
 
-  e.preventDefault();
+  data.view = 'entry-form';
   var newObj = {};
-  newObj.entryId = data.nextEntryId++;
-  newObj.image = $imageDisplay.src;
-  newObj.title = $titleBox.value;
-  newObj.notes = $notesBox.value;
-  data.entries.push(newObj);
-  $ulItem.prepend(addEntry(newObj));
-  $form.reset();
+  var indexPos = data.entries.findIndex((element, index) => {
+    if (element.entryId === data.editing) {
+      return true;
+    }
+  });
+  if (data.view === 'edit') { // do this EDIT function
+    newObj.entryId = data.editing;
+    newObj.image = $imageDisplay.src;
+    newObj.title = $titleBox.value;
+    newObj.notes = $notesBox.value;
+    data.entries.splice(indexPos, 1, newObj);
+    $ulItem.prepend(addEntry(newObj));
+    $form.reset();
+  } else {
+    newObj.entryId = data.nextEntryId++;
+    newObj.image = $imageDisplay.src;
+    newObj.title = $titleBox.value;
+    newObj.notes = $notesBox.value;
+    data.entries.push(newObj);
+    $ulItem.prepend(addEntry(newObj));
+    $form.reset();
+  }
 
   if ($photoURL.value === '') {
     $imageDisplay.src = 'images/placeholder-image-square.jpg';
@@ -36,6 +52,9 @@ $form.addEventListener('submit', function submitEntry(e) {
 var $submitBtn = document.querySelector('#submit-btn');
 
 $submitBtn.addEventListener('click', function (e) {
+  console.log(e);
+  console.log(e.target);
+
   if ($photoURL.value === '') {
     $imageDisplay.src = 'images/placeholder-image-square.jpg';
   } else {
@@ -151,6 +170,7 @@ $ulItem.addEventListener('click', function findDataId(e) {
     viewEntries.className = 'hidden';
     viewForm.className = '';
     $formHeading.textContent = 'Edit Entry';
+    data.view = 'edit';
     data.editing = e.target.dataset.entryId;
     $photoURL.value = e.path[3].firstChild.firstChild.src;
     $imageDisplay.src = $photoURL.value;
@@ -176,18 +196,3 @@ $ulItem.addEventListener('click', function findDataId(e) {
     }
   }
 });
-
-// if (data.editing === e.view.dataEntries[i].entryId) {
-//   console.log(data);
-//   console.log('data.editing: ', data.editing);
-//   console.log('event.entryId: ', e.view.dataEntries[i].entryId);
-
-//   var indexPos = data.entries.findIndex((element, index) => {
-//     if (element.entryId === data.editing) {
-//       return true;
-//     }
-//     return indexPos;
-//   });
-//   console.log(indexPos);
-//   break;
-// }
