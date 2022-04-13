@@ -12,7 +12,7 @@ var $titleBox = document.querySelector('#input-box');
 var $notesBox = document.querySelector('textarea');
 var $form = document.querySelector('form');
 
-$form.addEventListener('submit', function (e) {
+$form.addEventListener('submit', function submitEntry(e) {
   console.log(e);
   console.log(e.target);
 
@@ -25,8 +25,6 @@ $form.addEventListener('submit', function (e) {
   data.entries.push(newObj);
   $ulItem.prepend(addEntry(newObj));
   $form.reset();
-
-  // data.splice(//function that returns the array position, 1, newObj);
 
   if ($photoURL.value === '') {
     $imageDisplay.src = 'images/placeholder-image-square.jpg';
@@ -145,29 +143,21 @@ window.addEventListener('DOMContentLoaded', function (e) {
   }
 });
 
-$ulItem.addEventListener('click', function setDataEditing(e) {
-  // console.log(data.indexOf(e.target));
+$ulItem.addEventListener('click', function findDataId(e) {
+  var dataEntryId = e.target.getAttribute('data-entry-id');
+  var $formHeading = document.querySelector('h1');
 
   if (e.target.className === 'fas fa-pen') {
     viewEntries.className = 'hidden';
     viewForm.className = '';
+    $formHeading.textContent = 'Edit Entry';
     data.editing = e.target.dataset.entryId;
     $photoURL.value = e.path[3].firstChild.firstChild.src;
     $imageDisplay.src = $photoURL.value;
     $titleBox.value = e.path[3].children[1].firstChild.firstChild.innerText;
     $notesBox.value = e.path[3].children[1].lastChild.innerText;
+    data.editing = parseInt(dataEntryId);
   }
-
-  var targetEntryId = e.target.dataset.entryId;
-  var dataEntryId = e.target.getAttribute('data-entry-id');
-  for (let i = 0; i < data.entries.length; i++) {
-    if (targetEntryId === dataEntryId) {
-      data.editing = parseInt(targetEntryId);
-      break;
-    }
-  }
-
-  // continue here
 
   for (let i = 0; i < data.entries.length; i++) {
     if (data.editing === e.view.dataEntries[i].entryId) {
@@ -179,11 +169,25 @@ $ulItem.addEventListener('click', function setDataEditing(e) {
         if (element.entryId === data.editing) {
           return true;
         }
+        return indexPos;
       });
       console.log(indexPos);
       break;
     }
   }
-
-  return data.editing;
 });
+
+// if (data.editing === e.view.dataEntries[i].entryId) {
+//   console.log(data);
+//   console.log('data.editing: ', data.editing);
+//   console.log('event.entryId: ', e.view.dataEntries[i].entryId);
+
+//   var indexPos = data.entries.findIndex((element, index) => {
+//     if (element.entryId === data.editing) {
+//       return true;
+//     }
+//     return indexPos;
+//   });
+//   console.log(indexPos);
+//   break;
+// }
