@@ -12,9 +12,11 @@ var $titleBox = document.querySelector('#input-box');
 var $notesBox = document.querySelector('textarea');
 var $formHeading = document.querySelector('h1');
 var $form = document.querySelector('form');
+var $delete = document.querySelector('.delete');
 
 if ($formHeading.textContent === 'New Entry') {
   data.view = 'entry-form';
+  $delete.className = 'hidden';
 }
 
 $form.addEventListener('submit', function (e) {
@@ -176,6 +178,7 @@ $ulItem.addEventListener('click', function (e) {
   var dataEntryId = e.target.getAttribute('data-entry-id');
 
   if (e.target.className === 'fas fa-pen') {
+    $delete.className = 'delete';
     viewEntries.className = 'hidden';
     viewForm.className = '';
     $formHeading.textContent = 'Edit Entry';
