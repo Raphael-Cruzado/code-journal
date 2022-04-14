@@ -14,4 +14,7 @@ if (currentDataJSON !== null) {
 
 window.addEventListener('beforeunload', function (e) {
   this.localStorage.setItem('data-entries-storage', JSON.stringify(data));
+  // if (data.view === 'edit') {
+  //   data.view = 'entry-form';
+  // }
 });

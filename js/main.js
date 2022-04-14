@@ -10,20 +10,50 @@ $photoURL.addEventListener('input', function (e) {
 
 var $titleBox = document.querySelector('#input-box');
 var $notesBox = document.querySelector('textarea');
+var $formHeading = document.querySelector('h1');
 var $form = document.querySelector('form');
+
+if ($formHeading.textContent === 'New Entry') {
+  data.view = 'entry-form';
+}
 
 $form.addEventListener('submit', function (e) {
   e.preventDefault();
+
   var newObj = {};
-  newObj.entryId = data.nextEntryId++;
-  newObj.image = $imageDisplay.src;
-  newObj.title = $titleBox.value;
-  newObj.notes = $notesBox.value;
-  data.entries.push(newObj);
-  $ulItem.prepend(addEntry(newObj));
-  $form.reset();
+
+  if (data.view === 'edit') {
+    newObj.entryId = data.editing;
+    newObj.image = $imageDisplay.src;
+    newObj.title = $titleBox.value;
+    newObj.notes = $notesBox.value;
+    for (let i = 0; i < dataEntries.length; i++) {
+      if (data.editing === dataEntries[i].entryId) {
+        data.entries[i] = newObj;
+        break;
+      }
+    }
+    var $listItems = document.querySelectorAll('li');
+    var editedTree = addEntry(newObj);
+    for (let j = 0; j < $listItems.length; j++) {
+      if (parseInt($listItems[j].getAttribute('data-entry-id')) === data.editing) {
+        $listItems[j].replaceWith(editedTree);
+      }
+    }
+  } else if (data.view === 'entry-form') {
+    newObj.entryId = data.nextEntryId++;
+    newObj.image = $imageDisplay.src;
+    newObj.title = $titleBox.value;
+    newObj.notes = $notesBox.value;
+    data.entries.push(newObj);
+    $ulItem.prepend(addEntry(newObj));
+    $form.reset();
+  }
+
   if ($photoURL.value === '') {
     $imageDisplay.src = 'images/placeholder-image-square.jpg';
+  } else {
+    $imageDisplay.src = $photoURL.value;
   }
 });
 
@@ -44,7 +74,10 @@ $submitBtn.addEventListener('click', function (e) {
 //       <img class="column-full" id="entry-image" src="images/placeholder-image-square.jpg" alt="user-image">
 //     </div>
 //     <div class="column-half" id="entry-content" style="float: right">
-//       <h4><label for="user-text"></label></h4>
+//       <div class="title-column">
+//          <h4><label for="user-text">Title</label></h4>
+//           <i class="fas fa-pen"></i>
+//        </div >
 //       <p></p>
 //   </li>
 // </ul>
@@ -54,11 +87,14 @@ function addEntry(entry) {
   var itemCard1 = document.createElement('div');
   var userImage = document.createElement('img');
   var itemCard2 = document.createElement('div');
+  var titleCol = document.createElement('div');
   var headingTitle = document.createElement('h4');
+  var icon = document.createElement('i');
   var headingLabel = document.createElement('label');
   var userText = document.createElement('p');
 
   listItem.setAttribute('class', 'column-full');
+  listItem.setAttribute('data-entry-id', entry.entryId);
 
   itemCard1.setAttribute('class', 'column-half');
   itemCard1.style.float = 'left';
@@ -73,11 +109,18 @@ function addEntry(entry) {
   itemCard2.style.float = 'right';
   listItem.appendChild(itemCard2);
 
-  itemCard2.appendChild(headingTitle);
-
   headingLabel.setAttribute('for', 'user-text');
   headingLabel.textContent = entry.title;
   headingTitle.appendChild(headingLabel);
+
+  titleCol.setAttribute('class', 'title-column');
+  itemCard2.appendChild(titleCol);
+
+  titleCol.appendChild(headingTitle);
+
+  icon.setAttribute('class', 'fas fa-pen');
+  icon.setAttribute('data-entry-id', entry.entryId);
+  titleCol.appendChild(icon);
 
   itemCard2.appendChild(userText);
   userText.textContent = entry.notes;
@@ -109,9 +152,13 @@ $titleHeading.addEventListener('click', function (e) {
 var $newEntry = document.querySelector('#new-btn');
 
 $newEntry.addEventListener('click', function (e) {
+  data.view = 'entry-form';
+  $formHeading.textContent = 'New Entry';
+  $form.reset();
   if (viewForm.className === 'hidden') {
     viewEntries.className = 'hidden';
     viewForm.className = '';
+    $imageDisplay.src = 'images/placeholder-image-square.jpg';
   }
 });
 
@@ -122,5 +169,22 @@ window.addEventListener('DOMContentLoaded', function (e) {
   for (let i = 0; i < dataEntries.length; i++) {
     var newEntry = addEntry(dataEntries[i]);
     $ulItem.prepend(newEntry);
+  }
+});
+
+$ulItem.addEventListener('click', function (e) {
+  var dataEntryId = e.target.getAttribute('data-entry-id');
+
+  if (e.target.className === 'fas fa-pen') {
+    viewEntries.className = 'hidden';
+    viewForm.className = '';
+    $formHeading.textContent = 'Edit Entry';
+    data.view = 'edit';
+    data.editing = e.target.dataset.entryId;
+    $photoURL.value = e.path[3].firstChild.firstChild.src;
+    $imageDisplay.src = $photoURL.value;
+    $titleBox.value = e.path[3].children[1].firstChild.firstChild.innerText;
+    $notesBox.value = e.path[3].children[1].lastChild.innerText;
+    data.editing = parseInt(dataEntryId);
   }
 });
