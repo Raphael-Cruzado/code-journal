@@ -4,12 +4,6 @@
 var $imageDisplay = document.querySelector('#display-image');
 var $photoURL = document.querySelector('#image-input');
 
-var indexPos = data.entries.findIndex((element, index) => {
-  if (element.entryId === data.editing) {
-    return true;
-  }
-});
-
 $photoURL.addEventListener('input', function (e) {
   $imageDisplay.src = $photoURL.value;
 });
@@ -23,6 +17,12 @@ $form.addEventListener('submit', function (e) {
   e.preventDefault();
 
   var newObj = {};
+
+  var indexPos = data.entries.findIndex((element, index) => {
+    if (element.entryId === data.editing) {
+      return true;
+    }
+  });
 
   if (data.view === 'edit') {
     newObj.entryId = data.editing;
@@ -177,4 +177,14 @@ $ulItem.addEventListener('click', function (e) {
     $notesBox.value = e.path[3].children[1].lastChild.innerText;
     data.editing = parseInt(dataEntryId);
   }
+
+  for (let i = 0; i < dataEntries.length; i++) {
+    var indexPos = data.entries.findIndex((element, index) => {
+      if (element.entryId === data.editing) {
+        return true;
+      }
+    });
+  }
+
+  console.log(indexPos);
 });
