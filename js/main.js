@@ -12,11 +12,11 @@ var $titleBox = document.querySelector('#input-box');
 var $notesBox = document.querySelector('textarea');
 var $formHeading = document.querySelector('h1');
 var $form = document.querySelector('form');
-var $delete = document.querySelector('.delete');
+var $dltEntry = document.querySelector('.delete');
 
 if ($formHeading.textContent === 'New Entry') {
   data.view = 'entry-form';
-  $delete.className = 'hidden';
+  $dltEntry.className = 'hidden';
 }
 
 $form.addEventListener('submit', function (e) {
@@ -178,7 +178,7 @@ $ulItem.addEventListener('click', function (e) {
   var dataEntryId = e.target.getAttribute('data-entry-id');
 
   if (e.target.className === 'fas fa-pen') {
-    $delete.className = 'delete';
+    $dltEntry.className = 'delete';
     viewEntries.className = 'hidden';
     viewForm.className = '';
     $formHeading.textContent = 'Edit Entry';
@@ -189,5 +189,24 @@ $ulItem.addEventListener('click', function (e) {
     $titleBox.value = e.path[3].children[1].firstChild.firstChild.innerText;
     $notesBox.value = e.path[3].children[1].lastChild.innerText;
     data.editing = parseInt(dataEntryId);
+  }
+});
+
+var $main = document.querySelector('.main');
+var $modal = document.querySelector('.container-modal');
+var $cancelBtn = document.querySelector('#cancel-btn');
+var $deleteBtn = document.querySelector('#confirm-btn');
+
+$dltEntry.addEventListener('click', function (e) {
+  if ($modal.className === 'container-modal hidden') {
+    $modal.className = 'container-modal';
+    $main.className = 'backdrop-modal';
+  }
+});
+
+$cancelBtn.addEventListener('click', function (e) {
+  if ($modal.className === 'container-modal') {
+    $modal.className = 'container-modal hidden';
+    $main.className = '';
   }
 });
