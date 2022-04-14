@@ -30,10 +30,16 @@ $form.addEventListener('submit', function (e) {
     for (let i = 0; i < dataEntries.length; i++) {
       if (data.editing === dataEntries[i].entryId) {
         data.entries[i] = newObj;
-        $ulItem.append(addEntry(newObj));
+        break;
       }
     }
-    // it works!! now do BEFORE page reload |
+    var $listItems = document.querySelectorAll('li');
+    var editedTree = addEntry(newObj);
+    for (let j = 0; j < $listItems.length; j++) {
+      if (parseInt($listItems[j].getAttribute('data-entry-id')) === data.editing) {
+        $listItems[j].replaceWith(editedTree);
+      }
+    }
   } else if (data.view === 'entry-form') {
     newObj.entryId = data.nextEntryId++;
     newObj.image = $imageDisplay.src;
@@ -88,6 +94,7 @@ function addEntry(entry) {
   var userText = document.createElement('p');
 
   listItem.setAttribute('class', 'column-full');
+  listItem.setAttribute('data-entry-id', entry.entryId);
 
   itemCard1.setAttribute('class', 'column-half');
   itemCard1.style.float = 'left';
@@ -180,15 +187,4 @@ $ulItem.addEventListener('click', function (e) {
     $notesBox.value = e.path[3].children[1].lastChild.innerText;
     data.editing = parseInt(dataEntryId);
   }
-
-  // for (let i = 0; i < dataEntries.length; i++) {
-  //   console.log(dataEntries[i].entryId);
-  //   var indexPos = data.entries.findIndex((element, index) => {
-  //     if (element.entryId === data.editing) {
-  //       return true;
-  //     }
-  //   });
-  // }
-
-  // console.log(indexPos);
 });
