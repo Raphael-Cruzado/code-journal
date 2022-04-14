@@ -10,6 +10,7 @@ $photoURL.addEventListener('input', function (e) {
 
 var $titleBox = document.querySelector('#input-box');
 var $notesBox = document.querySelector('textarea');
+var $formHeading = document.querySelector('h1');
 var $form = document.querySelector('form');
 
 $form.addEventListener('submit', function submitEntry(e) {
@@ -17,14 +18,13 @@ $form.addEventListener('submit', function submitEntry(e) {
   console.log(e);
   console.log(e.target);
 
-  data.view = 'entry-form';
   var newObj = {};
   var indexPos = data.entries.findIndex((element, index) => {
     if (element.entryId === data.editing) {
       return true;
     }
   });
-  if (data.view === 'edit') { // do this EDIT function
+  if (data.view === 'edit') {
     newObj.entryId = data.editing;
     newObj.image = $imageDisplay.src;
     newObj.title = $titleBox.value;
@@ -32,7 +32,7 @@ $form.addEventListener('submit', function submitEntry(e) {
     data.entries.splice(indexPos, 1, newObj);
     $ulItem.prepend(addEntry(newObj));
     $form.reset();
-  } else {
+  } else if (data.view === 'entry-form') {
     newObj.entryId = data.nextEntryId++;
     newObj.image = $imageDisplay.src;
     newObj.title = $titleBox.value;
@@ -41,6 +41,7 @@ $form.addEventListener('submit', function submitEntry(e) {
     $ulItem.prepend(addEntry(newObj));
     $form.reset();
   }
+  $form.reset();
 
   if ($photoURL.value === '') {
     $imageDisplay.src = 'images/placeholder-image-square.jpg';
@@ -146,9 +147,12 @@ $titleHeading.addEventListener('click', function (e) {
 var $newEntry = document.querySelector('#new-btn');
 
 $newEntry.addEventListener('click', function (e) {
+  data.view = 'entry-form';
+  $form.reset();
   if (viewForm.className === 'hidden') {
     viewEntries.className = 'hidden';
     viewForm.className = '';
+    $imageDisplay.src = 'images/placeholder-image-square.jpg';
   }
 });
 
@@ -164,7 +168,6 @@ window.addEventListener('DOMContentLoaded', function (e) {
 
 $ulItem.addEventListener('click', function findDataId(e) {
   var dataEntryId = e.target.getAttribute('data-entry-id');
-  var $formHeading = document.querySelector('h1');
 
   if (e.target.className === 'fas fa-pen') {
     viewEntries.className = 'hidden';
