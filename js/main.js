@@ -13,25 +13,27 @@ var $notesBox = document.querySelector('textarea');
 var $formHeading = document.querySelector('h1');
 var $form = document.querySelector('form');
 
+if ($formHeading.textContent === 'New Entry') {
+  data.view = 'entry-form';
+}
+
 $form.addEventListener('submit', function (e) {
   e.preventDefault();
 
   var newObj = {};
-
-  var indexPos = data.entries.findIndex((element, index) => {
-    if (element.entryId === data.editing) {
-      return true;
-    }
-  });
 
   if (data.view === 'edit') {
     newObj.entryId = data.editing;
     newObj.image = $imageDisplay.src;
     newObj.title = $titleBox.value;
     newObj.notes = $notesBox.value;
-    data.entries[indexPos] = newObj;
-    $ulItem.append(addEntry(newObj)); // it works!! now do BEFORE page reload | pg rfrsh still returns data.view = 'edit'
-    $form.reset();
+    for (let i = 0; i < dataEntries.length; i++) {
+      if (data.editing === dataEntries[i].entryId) {
+        data.entries[i] = newObj;
+        $ulItem.append(addEntry(newObj));
+      }
+    }
+    // it works!! now do BEFORE page reload |
   } else if (data.view === 'entry-form') {
     newObj.entryId = data.nextEntryId++;
     newObj.image = $imageDisplay.src;
@@ -179,13 +181,14 @@ $ulItem.addEventListener('click', function (e) {
     data.editing = parseInt(dataEntryId);
   }
 
-  for (let i = 0; i < dataEntries.length; i++) {
-    var indexPos = data.entries.findIndex((element, index) => {
-      if (element.entryId === data.editing) {
-        return true;
-      }
-    });
-  }
+  // for (let i = 0; i < dataEntries.length; i++) {
+  //   console.log(dataEntries[i].entryId);
+  //   var indexPos = data.entries.findIndex((element, index) => {
+  //     if (element.entryId === data.editing) {
+  //       return true;
+  //     }
+  //   });
+  // }
 
-  console.log(indexPos);
+  // console.log(indexPos);
 });
