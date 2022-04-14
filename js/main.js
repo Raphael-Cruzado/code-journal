@@ -30,7 +30,7 @@ $form.addEventListener('submit', function (e) {
     newObj.title = $titleBox.value;
     newObj.notes = $notesBox.value;
     data.entries[indexPos] = newObj;
-    $ulItem.append(addEntry(newObj)); // it works!! now just do it so that it does it BEFORE page reload
+    $ulItem.append(addEntry(newObj)); // it works!! now do BEFORE page reload | pg rfrsh still returns data.view = 'edit'
     $form.reset();
   } else if (data.view === 'entry-form') {
     newObj.entryId = data.nextEntryId++;
@@ -144,6 +144,7 @@ var $newEntry = document.querySelector('#new-btn');
 
 $newEntry.addEventListener('click', function (e) {
   data.view = 'entry-form';
+  $formHeading.textContent = 'New Entry';
   $form.reset();
   if (viewForm.className === 'hidden') {
     viewEntries.className = 'hidden';
