@@ -18,7 +18,3 @@ window.addEventListener('beforeunload', function (e) {
     data.view = 'entry-form';
   }
 });
-
-window.addEventListener('onbeforeunload', function (e) {
-  data.view = 'entry-form';
-});

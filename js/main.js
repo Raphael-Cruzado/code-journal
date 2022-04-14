@@ -15,8 +15,6 @@ var $form = document.querySelector('form');
 
 $form.addEventListener('submit', function submitEntry(e) {
   e.preventDefault();
-  console.log(e);
-  console.log(e.target);
 
   var newObj = {};
   var indexPos = data.entries.findIndex((element, index) => {
@@ -24,13 +22,14 @@ $form.addEventListener('submit', function submitEntry(e) {
       return true;
     }
   });
+  console.log(indexPos);
   if (data.view === 'edit') {
     newObj.entryId = data.editing;
     newObj.image = $imageDisplay.src;
     newObj.title = $titleBox.value;
     newObj.notes = $notesBox.value;
-    data.entries.splice(indexPos, 1, newObj);
-    $ulItem.prepend(addEntry(newObj));
+    data.entries[indexPos] = newObj;
+    $ulItem.append(addEntry(newObj)); // it works!! now just do it so that it does it BEFORE page reload
     $form.reset();
   } else if (data.view === 'entry-form') {
     newObj.entryId = data.nextEntryId++;
@@ -41,7 +40,6 @@ $form.addEventListener('submit', function submitEntry(e) {
     $ulItem.prepend(addEntry(newObj));
     $form.reset();
   }
-  $form.reset();
 
   if ($photoURL.value === '') {
     $imageDisplay.src = 'images/placeholder-image-square.jpg';
@@ -182,20 +180,19 @@ $ulItem.addEventListener('click', function findDataId(e) {
     data.editing = parseInt(dataEntryId);
   }
 
-  for (let i = 0; i < data.entries.length; i++) {
-    if (data.editing === e.view.dataEntries[i].entryId) {
-      console.log(data);
-      console.log('data.editing: ', data.editing);
-      console.log('event.entryId: ', e.view.dataEntries[i].entryId);
+  // for (let i = 0; i < data.entries.length; i++) {
+  //   if (data.editing === e.view.dataEntries[i].entryId) {
+  //     console.log(data);
+  //     console.log('data.editing: ', data.editing);
+  //     console.log('event.entryId: ', e.view.dataEntries[i].entryId);
 
-      var indexPos = data.entries.findIndex((element, index) => {
-        if (element.entryId === data.editing) {
-          return true;
-        }
-        return indexPos;
-      });
-      console.log(indexPos);
-      break;
-    }
-  }
+  //     var indexPos = data.entries.findIndex((element, index) => {
+  //       if (element.entryId === data.editing) {
+  //         return true;
+  //       }
+  //       return indexPos;
+  //     });
+  //     break;
+  //   }
+  // }
 });
