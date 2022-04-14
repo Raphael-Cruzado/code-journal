@@ -64,9 +64,14 @@ li {
   margin-left: 1rem;
 }
 
-a {
+a:first-child {
   color: white;
   text-decoration: none;
+}
+
+.delete {
+  color: red;
+  text-decoration: underline;
 }
 
 .title-column {
