@@ -69,13 +69,50 @@ a:first-child {
   text-decoration: none;
 }
 
+.title-column {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .delete {
   color: red;
   text-decoration: underline;
 }
 
-.title-column {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.backdrop-modal {
+  background-color: rgb(0, 0, 0, 0.3);
+  position: relative;
+  top: -21px;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.modal {
+  background-color: antiquewhite;
+  padding: 2rem;
+  border-radius: 8px;
+}
+
+.container-modal {
+  width: 26rem;
+  position: fixed;
+  top: 38%;
+  left: 58%;
+  margin-top: -100px;
+  margin-left: -250px;
+}
+
+#cancel-btn {
+  background-color: lightgrey;
+  border-color: lightgrey;
+  color: black;
+}
+
+#confirm-btn {
+  background-color: red;
+  border-radius: 4px;
+  color: white;
+  font-size: larger;
 }

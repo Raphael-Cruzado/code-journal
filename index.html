@@ -26,7 +26,7 @@
     </div>
 
   </header>
-  <main>
+  <main class="backdrop-modal">
     <div class="container">
       <div data-view="entry-form" class="">
         <form action="" method="get">
@@ -57,6 +57,22 @@
             </div>
           </div>
         </form>
+
+        <div class="container-modal">
+          <div class="row modal">
+            <div class="column-full no-wrap" style="text-align: center;">
+              <p><b>Are you sure you want to delete this entry?</b></p>
+            </div>
+            <div class="row no-wrap" style="width: 100%; margin-top: 5px;">
+              <div class="column-half">
+                <button id="cancel-btn">Cancel</button>
+              </div>
+              <div class="column-half push-right">
+                <button id="confirm-btn">Confirm</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
