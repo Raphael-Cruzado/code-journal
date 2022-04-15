@@ -3,6 +3,7 @@
 
 var $imageDisplay = document.querySelector('#display-image');
 var $photoURL = document.querySelector('#image-input');
+var dataEntries = data.entries;
 
 $photoURL.addEventListener('input', function (e) {
   $imageDisplay.src = $photoURL.value;
@@ -128,7 +129,6 @@ function addEntry(entry) {
   userText.textContent = entry.notes;
 
   return listItem;
-
 }
 
 var $navBar = document.querySelector('.nav-bar');
@@ -165,7 +165,6 @@ $newEntry.addEventListener('click', function (e) {
 });
 
 var $ulItem = document.querySelector('ul');
-var dataEntries = data.entries;
 
 window.addEventListener('DOMContentLoaded', function (e) {
   for (let i = 0; i < dataEntries.length; i++) {
@@ -214,16 +213,24 @@ $cancelBtn.addEventListener('click', function (e) {
 // delete works BUT when page refreshes it returns, how to perm dlt?
 $deleteBtn.addEventListener('click', function (e) {
   var $listItems = document.querySelectorAll('li');
-  for (let i = 0; i < $listItems.length; i++) {
-    if (parseInt($listItems[i].getAttribute('data-entry-id')) === data.editing) {
-      $ulItem.removeChild($listItems[i]);
+  for (let i = 0; i < dataEntries.length; i++) {
+    if (data.editing === dataEntries[i].entryId) {
+      dataEntries.splice(i, 1);
+      break;
     }
   }
+
+  for (let j = 0; j < $listItems.length; j++) {
+    if (parseInt($listItems[j].getAttribute('data-entry-id')) === data.editing) {
+      $listItems[j].remove();
+      break;
+    }
+  }
+
   if (viewEntries.className === 'hidden') {
     viewForm.className = 'hidden';
     viewEntries.className = '';
   }
-
   if ($modal.className === 'container-modal') {
     $modal.className = 'container-modal hidden';
     $main.className = '';
