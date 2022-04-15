@@ -26,7 +26,7 @@
     </div>
 
   </header>
-  <main>
+  <main class="main">
     <div class="container">
       <div data-view="entry-form" class="">
         <form action="" method="get">
@@ -47,15 +47,38 @@
               <h4><label for="user-text">Notes</label></h4>
               <textarea required class="column-full" name="message" cols="30" rows="10"></textarea>
             </div>
-            <div class="column-full push-right">
-              <button id="submit-btn">Save</button>
+          </div>
+          <div class="row no-wrap">
+            <div class="column-half">
+              <p class="delete">Delete Entry</p>
+            </div>
+            <div class="column-half push-right">
+              <button class="push-right" id="submit-btn">Save</button>
             </div>
           </div>
         </form>
+
+        <div class="container-modal hidden">
+          <div class="row modal">
+            <div class="column-full no-wrap" style="text-align: center;">
+              <p><b>Are you sure you want to delete this entry?</b></p>
+            </div>
+            <div class="row no-wrap" style="width: 100%; margin-top: 5px;">
+              <div class="column-half">
+                <button id="cancel-btn">Cancel</button>
+              </div>
+              <div class="column-half push-right">
+                <button id="confirm-btn">Confirm</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
 
-      <div data-view="entries" class="hidden">
+    <div data-view="entries" class="hidden">
 
+      <div class="container">
         <div class="row no-wrap">
           <div class="column-half">
             <h1>Entries</h1>
@@ -70,7 +93,6 @@
           </ul>
         </div>
       </div>
-    </div>
   </main>
   <script src="js/data.js"></script>
   <script src="js/main.js"></script>

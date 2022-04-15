@@ -3,6 +3,7 @@
 
 var $imageDisplay = document.querySelector('#display-image');
 var $photoURL = document.querySelector('#image-input');
+var dataEntries = data.entries;
 
 $photoURL.addEventListener('input', function (e) {
   $imageDisplay.src = $photoURL.value;
@@ -12,9 +13,11 @@ var $titleBox = document.querySelector('#input-box');
 var $notesBox = document.querySelector('textarea');
 var $formHeading = document.querySelector('h1');
 var $form = document.querySelector('form');
+var $dltEntry = document.querySelector('.delete');
 
 if ($formHeading.textContent === 'New Entry') {
   data.view = 'entry-form';
+  $dltEntry.className = 'hidden';
 }
 
 $form.addEventListener('submit', function (e) {
@@ -126,7 +129,6 @@ function addEntry(entry) {
   userText.textContent = entry.notes;
 
   return listItem;
-
 }
 
 var $navBar = document.querySelector('.nav-bar');
@@ -163,7 +165,6 @@ $newEntry.addEventListener('click', function (e) {
 });
 
 var $ulItem = document.querySelector('ul');
-var dataEntries = data.entries;
 
 window.addEventListener('DOMContentLoaded', function (e) {
   for (let i = 0; i < dataEntries.length; i++) {
@@ -176,6 +177,7 @@ $ulItem.addEventListener('click', function (e) {
   var dataEntryId = e.target.getAttribute('data-entry-id');
 
   if (e.target.className === 'fas fa-pen') {
+    $dltEntry.className = 'delete';
     viewEntries.className = 'hidden';
     viewForm.className = '';
     $formHeading.textContent = 'Edit Entry';
@@ -186,5 +188,51 @@ $ulItem.addEventListener('click', function (e) {
     $titleBox.value = e.path[3].children[1].firstChild.firstChild.innerText;
     $notesBox.value = e.path[3].children[1].lastChild.innerText;
     data.editing = parseInt(dataEntryId);
+  }
+});
+
+var $main = document.querySelector('.main');
+var $modal = document.querySelector('.container-modal');
+var $cancelBtn = document.querySelector('#cancel-btn');
+var $deleteBtn = document.querySelector('#confirm-btn');
+
+$dltEntry.addEventListener('click', function (e) {
+  if ($modal.className === 'container-modal hidden') {
+    $modal.className = 'container-modal';
+    $main.className = 'backdrop-modal';
+  }
+});
+
+$cancelBtn.addEventListener('click', function (e) {
+  if ($modal.className === 'container-modal') {
+    $modal.className = 'container-modal hidden';
+    $main.className = '';
+  }
+});
+
+// delete works BUT when page refreshes it returns, how to perm dlt?
+$deleteBtn.addEventListener('click', function (e) {
+  var $listItems = document.querySelectorAll('li');
+  for (let i = 0; i < dataEntries.length; i++) {
+    if (data.editing === dataEntries[i].entryId) {
+      dataEntries.splice(i, 1);
+      break;
+    }
+  }
+
+  for (let j = 0; j < $listItems.length; j++) {
+    if (parseInt($listItems[j].getAttribute('data-entry-id')) === data.editing) {
+      $listItems[j].remove();
+      break;
+    }
+  }
+
+  if (viewEntries.className === 'hidden') {
+    viewForm.className = 'hidden';
+    viewEntries.className = '';
+  }
+  if ($modal.className === 'container-modal') {
+    $modal.className = 'container-modal hidden';
+    $main.className = '';
   }
 });
