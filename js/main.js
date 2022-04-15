@@ -210,3 +210,22 @@ $cancelBtn.addEventListener('click', function (e) {
     $main.className = '';
   }
 });
+
+// delete works BUT when page refreshes it returns, how to perm dlt?
+$deleteBtn.addEventListener('click', function (e) {
+  var $listItems = document.querySelectorAll('li');
+  for (let i = 0; i < $listItems.length; i++) {
+    if (parseInt($listItems[i].getAttribute('data-entry-id')) === data.editing) {
+      $ulItem.removeChild($listItems[i]);
+    }
+  }
+  if (viewEntries.className === 'hidden') {
+    viewForm.className = 'hidden';
+    viewEntries.className = '';
+  }
+
+  if ($modal.className === 'container-modal') {
+    $modal.className = 'container-modal hidden';
+    $main.className = '';
+  }
+});
